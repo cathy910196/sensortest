@@ -45,10 +45,6 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-
-
-
         DisplayMetrics displayMetrics = new DisplayMetrics();
         getWindowManager().getDefaultDisplay().getMetrics(displayMetrics);
         int height = displayMetrics.heightPixels;
@@ -90,26 +86,30 @@ public class MainActivity extends AppCompatActivity implements SensorEventListen
 
             long curTime = System.currentTimeMillis();
 
-            if ((curTime - lastUpdate) > 1000) {
+            if ((curTime - lastUpdate) > 100) {
                 long diffTime = (curTime - lastUpdate);
                 lastUpdate = curTime;
 
                 float speed = Math.abs(x+y+z - last_x - last_y - last_z) / diffTime * 10000;
 
-                if (speed > SHAKE_THRESHOLD) {
+                //if (speed > SHAKE_THRESHOLD) {
                     // yes, this is a shake action!
                     long shake_time = System.currentTimeMillis();
                     if (shake_time - last_shake_time >= SHAKE_HOLDOFF_MS) {
                         i++;
                         last_shake_time = shake_time;
                     }
-                }
+                //}
 
-                if(Round(x,4)>4.0000){
-                    Log.e("sensor", "Right shake detected " );
+                if(Round(x,4)>3.0000){
+                    //Log.e("sensor", "Right shake detected " );
+                    Log.e("sensor", "Left" );
+                    Log.e("sensor", String.valueOf(Round(x,4)));
                 }
-                else if(Round(x,4)<-4.0000){
-                    Log.e("sensor", "Left shake detected " );
+                else if(Round(x,4)<-3.0000){
+                    //Log.e("sensor", "Left shake detected " );
+                    Log.e("sensor", "Right" );
+                    Log.e("sensor", String.valueOf(Round(x,4)));
                 }
 
                 last_x = x;
